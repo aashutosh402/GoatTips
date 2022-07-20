@@ -6,6 +6,8 @@ import axios from "axios";
 import { login } from "../../actions/userAction";
 import image1 from "../../Images/Rectangle1.jpg"
 import { Metadata } from "../layout/Metadata";
+import {message } from 'antd'
+import { Loader } from "../layout/Loader";
 
 export const Login = () => {
   const {user,error,loading,isAuthenticated}  = useSelector((state)=>state.user)
@@ -23,31 +25,38 @@ export const Login = () => {
     try {
     
       dispatch(login(loginEmail,loginPassword))
+
+      if(user){
+        navigate('/')
+      }
     
     } 
     catch (error) {
-
       if(error){
-        alert(error)
+        
+        message.error("login faild")
       }
 
     }
     
     
     }
-   
 
   return (
     <>
+    {loading&&<Loader/>}
     <Metadata title = "loginUser"/>
       <div className="login_container">
         <div className="login_form_container">
           <div className="login_left">
         
+        
 <img src={image1} alt="" />
       
           </div>
+
           <div className="login_right">
+
             <form onSubmit={handleSubmit} action="" className="form_container">
               <h1>Welcome!</h1>
 <div className="input_label">
@@ -77,11 +86,10 @@ export const Login = () => {
                 />
  </div>
 
-              {error && <div className="error_msg">{error}</div>}
-
-              <div className="btn_flex">
+ {error && <div className="error_msg">{error}</div>}
+    
               <button type = "submit" className="login_btn white">Login</button>
-              </div>
+  
                 
             </form>
           </div>

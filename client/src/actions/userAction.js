@@ -14,11 +14,14 @@ try{
         );
 
 dispatch({type:LOGIN_SUCCESS,payload:data.user})
+console.log(data)
 
 }catch(error){
-    dispatch({type:LOGIN_FAIL,payload:error.message})
-}
+    dispatch({type:LOGIN_FAIL,payload:error.response.data})
 
+    console.log(error.response.data)
+    
+}
 
 }
 
@@ -32,17 +35,16 @@ export const register = (userData) =>async(dispatch)=>{
 
         const {data } = await axios.post(`/api/auth/register`,userData,config)
 
-
         dispatch({type:REGISTER_USER_SUCCESS,payload:data.user})
-
         console.log(data)
 
     }catch(error){
-    console.log(error)
 
         dispatch({
             type:REGISTER_USER_FAIL,
-            payload:error.message,
+            payload:error.response.data,
         })
+        console.log(error)
     }
+  
 }

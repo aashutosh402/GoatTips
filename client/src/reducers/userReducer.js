@@ -27,7 +27,7 @@ export const userReducer = (state ={},action)=>{
         loading: false,
         isAuthenticated: false,
         user: null,
-        error: action.payload,
+        error:action.payload,
         }
 
         default:

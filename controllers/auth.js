@@ -20,12 +20,14 @@ exports.register = async (req, res, next) => {
       console.log(validators)
 
       if(!valid){
-
-        if (user) {
-          return next(new ErrorResponse("user already registered"), 400);
-        }  
-       
-      } else {
+ return res.status(500).json("email is invalid please enter a valid email")
+        // if (user) {
+        //   return res.status(500).json("user already registered")
+        // }  
+      }else if(user){
+        return res.status(500).json("user already registered")
+      }
+       else {
         const user = await User.create({
           username,
           email,
@@ -40,8 +42,7 @@ exports.register = async (req, res, next) => {
      
     });
   }catch (err) {
-    next(err);
-   
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -54,11 +55,12 @@ exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return next(new ErrorResponse("invalid credential", 401));
+return res.status(500).json("invalid credentials user not found")
     }
     const isMatch = await user.matchPasswords(password);
     if (!isMatch) {
-      return next(new ErrorResponse("invalid credential", 401));
+   return res.status(500).json("password is not vallid please register")
+ 
     }
         // res.status(201).json(user)
 

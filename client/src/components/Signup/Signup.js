@@ -6,13 +6,16 @@ import axios from "axios"
 import { register } from "../../actions/userAction"
 import image1 from "../../Images/Rectangle1.jpg"
 import { Metadata } from "../layout/Metadata"
+import { Loader } from "../layout/Loader"
+import { Success } from "../layout/Success"
 
 
 
 export const Signup = ()=>{
 
-    const [errormsj,setErrormsj] = useState("")
-    const {error,loading} = useSelector((state)=>state.user)
+const navigate = useNavigate()
+
+    const {error,loading,isAuthenticated} = useSelector((state)=>state.user)
     
     const dispatch =  useDispatch()
     const [data,setData] = useState({
@@ -37,29 +40,32 @@ e.preventDefault()
 try {
 
   dispatch(register(data))
-
-
+  
+  if(isAuthenticated){
+    navigate("/")
+  }
 
 } 
 catch (error) {
 if(error){
-    alert(error)
+console.log(error)
 }
 }
+
 
 
 }
   return(
       <>
-
+{loading&&<Loader/>}
       <Metadata title = "Signup"/>
     <div className="login_container">
         <div className="login_form_container">
             <div className="left">
  <img src={image1} alt="" />
             </div>
+
             <div className="login_right">
-      {error&&<div className="error_msg">{errormsj}</div>}
                 <form onSubmit={handleSubmit} action="" className="form_container">
                         <h1>Hello!</h1>
                         <div className="input_label">
@@ -114,9 +120,13 @@ if(error){
                            <option value = "Female" >Female</option>
                            </select>
                         </div>
-                        <div className="btn_flex">
-              <button type = "submit" className="login_btn white">Signup</button>
-              </div>
+
+
+      {error&&<div className="error_msg">{error}</div>}
+{isAuthenticated&&<Success message="user registered successfully"/>}
+
+              <button type = "submit" className="login_btn green">Signup</button>
+              
                 </form>
             </div>
         </div>
