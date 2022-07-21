@@ -19,14 +19,14 @@ const options = {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
-<BrowserRouter>
+
    <Provider store = {store}>
    <AlertProvider template = {AlertTemplate} {...options}>
 
 <App/>
     </AlertProvider>
    </Provider>
-</BrowserRouter>
+
 
 );
 

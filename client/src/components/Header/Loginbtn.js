@@ -11,14 +11,10 @@ export const Loginbtn = () => {
     <>
       <span className="home_btn">
         {isAuthenticated !==true? (
-          <div>
-            <button className="main_btn" onClick={() => navigate("/login")}>
-              Login
-            </button>
-            <button className="sign_btn" onClick={() => navigate("/signup")}>
-              Signup
-            </button>
-          </div>
+           <ul className="navbar-nav top-btn ml-auto">
+           <Link to = "/login"><button className='btn btn-1'>Login</button>  </Link>
+            <Link to = "/signup"><button className='btn btn-2'>Signup</button>  </Link>
+         </ul>
         ) : (
           <div>
             <button onClick={()=>navigate("/dashboard")} className="user_btn">{user.username}</button>

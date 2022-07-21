@@ -26,10 +26,7 @@ console.log(user)
                   <Link to = "/sports" className="nav-link">SPORTS</Link>
                 </li>    
               </ul>
-              <ul className="navbar-nav top-btn ml-auto">
-                <Link to = "/login"><button className='btn btn-1'>Login</button>  </Link>
-                 <Link to = "/signup"><button className='btn btn-2'>Signup</button>  </Link>
-              </ul>
+        <Loginbtn/>
             </div>
           </nav>
         </div>
