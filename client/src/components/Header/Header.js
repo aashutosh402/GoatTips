@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Header.css";
 import { Loginbtn } from "./Loginbtn";
-
 export const Header = () => {
   const { user, isAuthenticated, loading } = useSelector((state) => state);
 console.log(user)
@@ -11,20 +10,29 @@ console.log(user)
   const navigate = useNavigate();
   return (
     <>
-      <nav className="navbar">
-        <h1> The Goat Tips</h1>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/sports">Sports</Link>
-          </li>
-        </ul>
+          <div className="container-fluid Mainheader">      
+        <nav className="container navbar navbar-expand-lg navbar-light">
+            <Link className="navbar-brand" to="/"><img src="../logo.png" /></Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
 
-<Loginbtn/>
-
-      </nav>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                  <Link to= "/" className="nav-link" >HOME</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to = "/sports" className="nav-link">SPORTS</Link>
+                </li>    
+              </ul>
+              <ul className="navbar-nav top-btn ml-auto">
+                <Link to = "/login"><button className='btn btn-1'>Login</button>  </Link>
+                 <Link to = "/signup"><button className='btn btn-2'>Signup</button>  </Link>
+              </ul>
+            </div>
+          </nav>
+        </div>
     </>
   );
 };

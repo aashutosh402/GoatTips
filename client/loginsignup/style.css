@@ -53,7 +53,7 @@ body{
 }
 
 .wel-bg{
-    background: url('../../Images/shhh.png');
+    background: url('assets/images/shhh.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -61,7 +61,7 @@ body{
     width: 100%;
 }
 .img-main{
-    background: url('../../Images/welcome-img.png');
+    background: url(assets/images/welcome-img.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -143,3 +143,51 @@ i.fa.fa-eye {
     font-weight: bold !important;
 }
 
+
+
+/* signup */
+
+.form-main h3 {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #000;
+    padding-top: 20px;
+}
+.form-inner {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 15px;
+}
+
+
+
+/* responsive */
+@media (max-width:1200px) {
+    .form-content {
+        padding: 0px 40px;
+        padding-top: 60px;
+    }
+    .wel-form {
+        height: auto;
+    }
+  }
+
+  @media (max-width:668px) {
+        .form-content {
+            padding: 0px 25px;
+            padding-top: 10px;
+        }
+        .wel-form {
+            display: flex;
+            flex-direction: column;
+        }
+      
+        .form-content {
+            text-align: center;
+        }
+        .form-content h2 {
+            font-size: 2rem;
+        }   
+}
