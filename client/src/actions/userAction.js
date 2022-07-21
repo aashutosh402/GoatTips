@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from '../constants/userConstants'
+import { CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from '../constants/userConstants'
 
 
 export const login = (email,password) =>async(dispatch,getState)=>{
@@ -46,5 +46,9 @@ export const register = (userData) =>async(dispatch)=>{
         })
         console.log(error)
     }
-  
 }
+
+//clearing errors
+export const clearErrors = () => async (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS});
+  };

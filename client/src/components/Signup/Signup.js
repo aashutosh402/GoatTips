@@ -1,19 +1,21 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { Link,useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import "./Signup.css"
 import axios from "axios"
-import { register } from "../../actions/userAction"
+import { clearErrors, register } from "../../actions/userAction"
 import image1 from "../../Images/Rectangle1.jpg"
 import { Metadata } from "../layout/Metadata"
 import { Loader } from "../layout/Loader"
 import { Success } from "../layout/Success"
+import {useAlert, userAlert} from "react-alert"
 
 
 
 export const Signup = ()=>{
 
 const navigate = useNavigate()
+const alert = useAlert()
 
     const {error,loading,isAuthenticated} = useSelector((state)=>state.user)
     
@@ -26,35 +28,34 @@ const navigate = useNavigate()
         gender:"",
 
     })
-    const[option,setOption,user] = useState("gender")
+
     const handleChange = (event)=>{
 
 setData({...data,[event.target.name]:event.target.value})
 console.log(data)
 
+
     }
 
 const handleSubmit = async(e)=>{
 e.preventDefault()
-
-try {
-
-  dispatch(register(data))
+dispatch(register(data))
   
-  if(isAuthenticated){
-    navigate("/")
-  }
+}
 
-} 
-catch (error) {
+useEffect(()=>{
+
 if(error){
-console.log(error)
-}
+    alert.error(error)
+    dispatch(clearErrors())
 }
 
 
-
+if(isAuthenticated){
+    alert.success("Signup Successfull")
+    navigate("/")
 }
+},[navigate,isAuthenticated,loading,error])
   return(
       <>
 {loading&&<Loader/>}
@@ -115,15 +116,12 @@ console.log(error)
                     <input onChange={handleChange} type="date" name="dob" placeholder="dob" required  value={data.dob} className = " greytxt" />
 </div>
  
-                           <select style={{ border:"2px solid rgba(128, 128, 128, 0.356)"  }} className="greytxt" placeholder="Gender" value = {option} onChange = {handleChange } name="gender" id="">
+                           <select style={{ border:"2px solid rgba(128, 128, 128, 0.356)"  }} className="greytxt" placeholder="Gender" onChange = {handleChange } name="gender" id="">
                            <option value = "Male" >Male</option>
                            <option value = "Female" >Female</option>
                            </select>
                         </div>
 
-
-      {error&&<div className="error_msg">{error}</div>}
-{isAuthenticated&&<Success message="user registered successfully"/>}
 
               <button type = "submit" className="login_btn green">Signup</button>
               

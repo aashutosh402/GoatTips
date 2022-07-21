@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from "../constants/userConstants"
+import { CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from "../constants/userConstants"
 
 export const userReducer = (state ={},action)=>{
     console.log(state.user)
@@ -29,6 +29,12 @@ export const userReducer = (state ={},action)=>{
         user: null,
         error:action.payload,
         }
+
+        case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
         default:
         return state

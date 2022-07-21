@@ -3,17 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux"
 import "./Login.css";
 import axios from "axios";
-import { login } from "../../actions/userAction";
+import {clearErrors,login } from "../../actions/userAction";
 import image1 from "../../Images/Rectangle1.jpg"
 import { Metadata } from "../layout/Metadata";
-import {message } from 'antd'
 import { Loader } from "../layout/Loader";
+import {useAlert, userAlert} from "react-alert"
 
 export const Login = () => {
   const {user,error,loading,isAuthenticated}  = useSelector((state)=>state.user)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const alert = useAlert()
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -25,22 +26,28 @@ export const Login = () => {
     try {
     
       dispatch(login(loginEmail,loginPassword))
-
-      if(user){
-        navigate('/')
-      }
     
+
     } 
     catch (error) {
       if(error){
-        
-        message.error("login faild")
+    return error
       }
 
-    }
-    
-    
-    }
+    }}
+    useEffect(()=>{
+
+if(error){
+  alert.error(error)
+  dispatch(clearErrors());
+}
+
+      if(isAuthenticated){
+
+        navigate("/") 
+      }
+     
+    },[error,navigate,isAuthenticated,loading])
 
   return (
     <>
@@ -49,14 +56,9 @@ export const Login = () => {
       <div className="login_container">
         <div className="login_form_container">
           <div className="login_left">
-        
-        
 <img src={image1} alt="" />
-      
           </div>
-
           <div className="login_right">
-
             <form onSubmit={handleSubmit} action="" className="form_container">
               <h1>Welcome!</h1>
 <div className="input_label">
@@ -86,7 +88,7 @@ export const Login = () => {
                 />
  </div>
 
- {error && <div className="error_msg">{error}</div>}
+ {/* {error && <div className="error_msg">{error}</div>} */}
     
               <button type = "submit" className="login_btn white">Login</button>
   

@@ -3,8 +3,8 @@ const crypto = require("crypto");
 const ErrorResponse = require("../utlis/errorresponse.js");
 const sendEmail = require("../utlis/sendEmail.js");
 const user = require("../models/User");
-const emailValidator = require("deep-email-validator")
-
+const emailValidator = require("deep-email-validator");
+const { setTimeout } = require("timers");
 
 async function isEmailValid(email) {
     return emailValidator.validate(email)
@@ -12,6 +12,11 @@ async function isEmailValid(email) {
 exports.register = async (req, res, next) => {
    
   const { username, email, password,dob,gender } = req.body;
+  if(password.length<6){
+      return res.status(400).json("password must be 6 character long")
+
+
+  }
 
   try {
     User.findOne({ email}, async (err, user) => {
@@ -21,9 +26,7 @@ exports.register = async (req, res, next) => {
 
       if(!valid){
  return res.status(500).json("email is invalid please enter a valid email")
-        // if (user) {
-        //   return res.status(500).json("user already registered")
-        // }  
+        
       }else if(user){
         return res.status(500).json("user already registered")
       }
@@ -52,6 +55,7 @@ exports.login = async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorResponse("please provide email&password", 400));
   }
+ 
   try {
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
